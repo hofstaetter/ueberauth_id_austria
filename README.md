@@ -70,6 +70,9 @@ Otherwise the test endpoint `eid2.oesterreich.gv.at` is used.
 There are predefined test identities that can be used via this endpoint. A list
 and description is available at [the EGIZ homepage](https://eid.egiz.gv.at/anbindung/testidentitaeten/vordefinierte-testidentitaeten/).
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and can be found at <https://hexdocs.pm/ueberauth_id_austria>.
+To enable testing mode you have to include the following in your compile-time configuration:
+
+```elixir
+config :ueberauth_id_austria, :prod, false
+```
 

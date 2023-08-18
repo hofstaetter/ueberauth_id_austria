@@ -10,7 +10,9 @@ defmodule Ueberauth.Strategy.IdAustria.OAuth do
   """
   use OAuth2.Strategy
 
-  @host if Mix.env() == :prod, do: "eid.oesterreich.gv.at", else: "eid2.oesterreich.gv.at"
+  @host if Application.compile_env(:ueberauth_id_austria, :prod, true),
+          do: "eid.oesterreich.gv.at",
+          else: "eid2.oesterreich.gv.at"
 
   @defaults [
     strategy: __MODULE__,

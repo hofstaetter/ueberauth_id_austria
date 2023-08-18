@@ -62,7 +62,7 @@ defmodule Ueberauth.Strategy.IdAustria do
   alias Ueberauth.Strategy.Helpers
 
   @verify_key JOSE.JWK.from_pem_file(
-                if Mix.env() == :prod,
+                if Application.compile_env(:ueberauth_id_austria, :prod, true),
                   do: "assets/P.crt",
                   else: "assets/Q.crt"
               )
