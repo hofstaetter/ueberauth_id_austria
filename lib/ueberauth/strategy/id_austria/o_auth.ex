@@ -107,13 +107,13 @@ defmodule Ueberauth.Strategy.IdAustria.OAuth do
 
   defp check_config_key_exists(config, key) when is_list(config) do
     unless Keyword.has_key?(config, key) do
-      raise "#{inspect(key)} missing from config :ueberauth, Ueberauth.Strategy.IdAustria"
+      raise "#{inspect(key)} missing from config :ueberauth, Ueberauth.Strategy.IdAustria.OAuth"
     end
 
     config
   end
 
   defp check_config_key_exists(_, _) do
-    raise "Config :ueberauth, Ueberauth.Strategy.IdAustria is not a keyword list, as expected"
+    raise "Config :ueberauth, Ueberauth.Strategy.IdAustria.OAuth is not a keyword list, as expected"
   end
 end
