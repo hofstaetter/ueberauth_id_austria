@@ -16,7 +16,7 @@ defmodule Ueberauth.Strategy.IdAustria.OAuth do
 
   @defaults [
     strategy: __MODULE__,
-    authorize_url: "https:/#{@host}//auth/idp/profile/oidc/authorize",
+    authorize_url: "https://#{@host}/auth/idp/profile/oidc/authorize",
     token_url: "https://#{@host}/auth/idp/profile/oidc/token",
     token_method: :post,
     serializers: %{"application/json" => Jason}
