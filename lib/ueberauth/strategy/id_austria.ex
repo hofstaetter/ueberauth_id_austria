@@ -61,12 +61,6 @@ defmodule Ueberauth.Strategy.IdAustria do
   alias Ueberauth.Auth.Extra
   alias Ueberauth.Strategy.Helpers
 
-  @verify_key JOSE.JWK.from_pem_file(
-                if Application.compile_env(:ueberauth_id_austria, :prod, true),
-                  do: "assets/P.crt",
-                  else: "assets/Q.crt"
-              )
-
   @doc """
   Handles the initial redirect to the ID Austria authentication page.
 
@@ -167,7 +161,7 @@ defmodule Ueberauth.Strategy.IdAustria do
   defp fetch_user(conn, token) do
     conn = put_private(conn, :eid_token, token)
 
-    case JOSE.JWT.verify(@verify_key, token.other_params["id_token"]) do
+    case JOSE.JWT.verify(UeberauthIdAustria.Config.verify_key(), token.other_params["id_token"]) do
       {true, jwt, _jws} -> put_private(conn, :eid_jwt, jwt)
       {false, _, _} -> set_errors!(conn, [error("invalid_signature", "Invalid Signature")])
     end

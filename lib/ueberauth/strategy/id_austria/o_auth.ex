@@ -10,18 +10,6 @@ defmodule Ueberauth.Strategy.IdAustria.OAuth do
   """
   use OAuth2.Strategy
 
-  @host if Application.compile_env(:ueberauth_id_austria, :prod, true),
-          do: "eid.oesterreich.gv.at",
-          else: "eid2.oesterreich.gv.at"
-
-  @defaults [
-    strategy: __MODULE__,
-    authorize_url: "https://#{@host}/auth/idp/profile/oidc/authorize",
-    token_url: "https://#{@host}/auth/idp/profile/oidc/token",
-    token_method: :post,
-    serializers: %{"application/json" => Jason}
-  ]
-
   @doc """
   Construct a client for requests to ID Austria.
 
@@ -33,21 +21,9 @@ defmodule Ueberauth.Strategy.IdAustria.OAuth do
   These options are only useful for usage outside the normal callback phase of Ueberauth.
   """
   def client(opts \\ []) do
-    client_opts =
-      @defaults
-      |> Keyword.merge(config())
-      |> Keyword.merge(opts)
-
-    OAuth2.Client.new(client_opts)
-  end
-
-  # Fetches configuration for `Ueberauth.Strategy.IdAustria.OAuth` Strategy from `config.exs`
-  # Also checks if at least `client_id` and `client_secret` are set, raising an error if not.
-  defp config() do
-    :ueberauth
-    |> Application.fetch_env!(Ueberauth.Strategy.IdAustria.OAuth)
-    |> check_config_key_exists(:client_id)
-    |> check_config_key_exists(:client_secret)
+    UeberauthIdAustria.Config.oauth()
+    |> Keyword.merge(opts)
+    |> OAuth2.Client.new()
   end
 
   @doc """
@@ -105,15 +81,4 @@ defmodule Ueberauth.Strategy.IdAustria.OAuth do
     |> put_headers(headers)
   end
 
-  defp check_config_key_exists(config, key) when is_list(config) do
-    unless Keyword.has_key?(config, key) do
-      raise "#{inspect(key)} missing from config :ueberauth, Ueberauth.Strategy.IdAustria.OAuth"
-    end
-
-    config
-  end
-
-  defp check_config_key_exists(_, _) do
-    raise "Config :ueberauth, Ueberauth.Strategy.IdAustria.OAuth is not a keyword list, as expected"
-  end
 end

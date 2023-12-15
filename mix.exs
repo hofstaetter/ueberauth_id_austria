@@ -2,7 +2,7 @@ defmodule UeberauthIdAustria.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/hofstaetter/ueberauth_id_austria"
-  @version "0.1.0"
+  @version "0.2.0"
 
   def project do
     [
@@ -22,6 +22,7 @@ defmodule UeberauthIdAustria.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: {UeberauthIdAustria, []},
       extra_applications: [:logger, :ueberauth, :oauth2]
     ]
   end
@@ -34,10 +35,9 @@ defmodule UeberauthIdAustria.MixProject do
       {:jose, "~> 1.8"},
 
       # dev/test dependencies
-      {:ex_doc, "~> 0.18", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.18", only: :dev, runtime: false}
     ]
   end
-
 
   defp docs do
     [
@@ -55,7 +55,7 @@ defmodule UeberauthIdAustria.MixProject do
   defp package do
     [
       description: "An Uberauth strategy for ID Austria (eIDAS) authentication.",
-      files: ["assets", "lib", "mix.exs", "README.md", "LICENSE.md"],
+      files: ["lib", "priv", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Martin Bürgmann <martin.buergmann@hofstaetter.io>"],
       licenses: ["MIT"],
       links: %{
